@@ -1,0 +1,4 @@
+{
+    "mochaExplorer.files": "test/**/*.spec.{j,t}s",
+    "mochaExplorer.timeout": 60000
+}

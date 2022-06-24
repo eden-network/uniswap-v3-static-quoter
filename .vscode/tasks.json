@@ -1,0 +1,16 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "shell",
+			"problemMatcher": [],
+			"label": "npx hardhat compile",
+			"command": "npx hardhat compile",
+			"detail": "compile contracts",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		}
+	]
+}
