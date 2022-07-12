@@ -49,6 +49,15 @@ library TickBitmap {
         int24 tick,
         int24 tickSpacing,
         bool lte
+    ) external view returns (int24 next, bool initialized) {
+        return _nextInitializedTickWithinOneWord(poolAddress, tick, tickSpacing, lte);
+    }
+
+    function _nextInitializedTickWithinOneWord(
+        address poolAddress,
+        int24 tick,
+        int24 tickSpacing,
+        bool lte
     ) internal view returns (int24 next, bool initialized) {
         IUniswapV3Pool pool = IUniswapV3Pool(poolAddress);
         int24 compressed = tick / tickSpacing;
@@ -228,7 +237,7 @@ contract UniswapV3StaticQuoter is PeripheryImmutableState, IUniswapV3StaticQuote
 
             step.sqrtPriceStartX96 = state.sqrtPriceX96;
 
-            (step.tickNext, step.initialized) = TickBitmap.nextInitializedTickWithinOneWord(
+            (step.tickNext, step.initialized) = TickBitmap._nextInitializedTickWithinOneWord(
                 poolAddress,
                 state.tick,
                 tickSpacing,
@@ -268,12 +277,7 @@ contract UniswapV3StaticQuoter is PeripheryImmutableState, IUniswapV3StaticQuote
             if (cache.feeProtocol > 0) {
                 uint256 delta = step.feeAmount / cache.feeProtocol;
                 step.feeAmount -= delta;
-                state.protocolFee += uint128(delta);
             }
-
-            // update global fee tracker
-            if (state.liquidity > 0)
-                state.feeGrowthGlobalX128 += FullMath.mulDiv(step.feeAmount, FixedPoint128.Q128, state.liquidity);
 
             // shift tick if we reached the next price
             if (state.sqrtPriceX96 == step.sqrtPriceNextX96) {
