@@ -11,5 +11,23 @@
                 "factory": "0x1F98431c8aD98523631AE4a59f267346ea31F984"
             }
         }
+    },
+    "avalanche": {
+        "tokens": {
+            "wavax": "0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7", 
+            "savax": "0x2b2C81e08f1Af8835a78Bb2A90AE924ACE0eA4bE",
+            "usdc": "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
+            "yusd": "0x111111111111ed1D73f860F57b2798b683f2d325"
+        },
+        "protocols": {
+            "kyber": {
+                "pools": {
+                    "yusd_usdc": "0x42845783dee627f47b40b5ad7f1c5147c052a21c",
+                    "wavax_savax": "0x897a83cf016f33fb061e756e4ca89baa9f17990a"
+                },
+                "quoterV2": "0x0D125c15D54cA1F8a813C74A81aEe34ebB508C1f", 
+                "factory": "0x5F1dddbf348aC2fbe22a163e30F99F9ECE3DD50a"
+            }
+        }
     }
 }

@@ -12,6 +12,7 @@ dotenv.config();
 const ETHEREUM_RPC = process.env.ETHEREUM_RPC ?? "";
 const OPTIMISM_RPC = process.env.OPTIMISM_RPC ?? "";
 const ARBITRUM_RPC = process.env.ARBITRUM_RPC ?? "";
+const AVALANCHE_RPC = process.env.AVALANCHE_RPC ?? "";
 const DEPLOYER_ADDRESS = process.env.DEPLOYER_ADDRESS as string;
 const DEPLOYER_PRIVATE_KEY = process.env.DEPLOYER_PRIVATE_KEY as string;
 const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY;
@@ -40,10 +41,19 @@ const arbitrumConfig = {
     accounts: [] as string[]
 };
 
+const avalancheConfig = {
+    url: AVALANCHE_RPC,
+    chainId: 43114,
+    live: true,
+    saveDeployments: true,
+    accounts: [] as string[]
+};
+
 if (DEPLOYER_PRIVATE_KEY) {
     mainnetConfig.accounts.push(DEPLOYER_PRIVATE_KEY);
     optimismConfig.accounts.push(DEPLOYER_PRIVATE_KEY);
     arbitrumConfig.accounts.push(DEPLOYER_PRIVATE_KEY);
+    avalancheConfig.accounts.push(DEPLOYER_PRIVATE_KEY);
 }
 
 const config: HardhatUserConfig = {
@@ -68,7 +78,8 @@ const config: HardhatUserConfig = {
         },
         mainnet: mainnetConfig,
         optimism: optimismConfig,
-        arbitrum: arbitrumConfig
+        arbitrum: arbitrumConfig,
+        avalanche: avalancheConfig,
     },
     namedAccounts: {
         deployer: {
@@ -107,10 +118,17 @@ const config: HardhatUserConfig = {
                 apiURL: "https://api.arbiscan.io/api",
                 browserURL: "https://arbiscan.io"
             }
+        }, {
+            network: "avalanche",
+            chainId: 43114,
+            urls: {
+                apiURL: "https://api.snowtrace.io/api",
+                browserURL: "https://snowtrace.io"
+            }
         }]
     },
     mocha: {
-        timeout: 60000
+        timeout: 600000000
     }
 };
 
