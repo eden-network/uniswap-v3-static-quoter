@@ -22,66 +22,32 @@ abstract contract UniV3likeQuoterCore {
         int256 amountSpecified,
         uint160 sqrtPriceLimitX96
     ) public virtual view returns (int256 amount0, int256 amount1) {
-        require(amountSpecified != 0, 'AS');
-
-        GlobalState memory gs = getPoolGlobalState(poolAddress);
-        int24 tickSpacing = getTickSpacing(poolAddress);
-
-        require(
-            zeroForOne
-                ? sqrtPriceLimitX96 < gs.startPrice && sqrtPriceLimitX96 > TickMath.MIN_SQRT_RATIO
-                : sqrtPriceLimitX96 > gs.startPrice && sqrtPriceLimitX96 < TickMath.MAX_SQRT_RATIO,
-            'SPL'
-        );
-
-        SwapCache memory cache = SwapCache({
-            liquidityStart: getLiquidity(poolAddress),
-            blockTimestamp: _blockTimestamp(),
-            feeProtocol: zeroForOne ? gs.communityFeeToken0 : gs.communityFeeToken1,
-            secondsPerLiquidityCumulativeX128: 0,
-            tickCumulative: 0,
-            computedLatestObservation: false
-        });
-
+        require(amountSpecified != 0, 'amountSpecified cannot be zero');
         bool exactInput = amountSpecified > 0;
-
-        SwapState memory state = SwapState({
-            amountSpecifiedRemaining: amountSpecified,
-            amountCalculated: 0,
-            sqrtPriceX96: gs.startPrice,
-            tick: gs.startTick,
-            feeGrowthGlobalX128: feeGrowthGlobalX128(poolAddress, zeroForOne),
-            protocolFee: 0,
-            liquidity: cache.liquidityStart
-        });
-
+        (int24 tickSpacing, uint16 fee, SwapState memory state) = getInitState(
+            poolAddress,
+            zeroForOne,
+            amountSpecified,
+            sqrtPriceLimitX96
+        );
         // continue swapping as long as we haven't used the entire input/output and haven't reached the price limit
         while (state.amountSpecifiedRemaining != 0 && state.sqrtPriceX96 != sqrtPriceLimitX96) {
             StepComputations memory step;
             step.sqrtPriceStartX96 = state.sqrtPriceX96;
-            (step.tickNext, step.initialized) = nextInitializedTickWithinOneWord(
+
+            (step.tickNext, step.initialized, step.sqrtPriceNextX96) = nextInitializedTickAndPrice(
                 poolAddress,
                 state.tick,
                 tickSpacing,
                 zeroForOne
             );
-            // ensure that we do not overshoot the min/max tick, as the tick bitmap is not aware of these bounds
-            if (step.tickNext < TickMath.MIN_TICK) {
-                step.tickNext = TickMath.MIN_TICK;
-            } else if (step.tickNext > TickMath.MAX_TICK) {
-                step.tickNext = TickMath.MAX_TICK;
-            }
-            // get the price for the next tick
-            step.sqrtPriceNextX96 = TickMath.getSqrtRatioAtTick(step.tickNext);
             // compute values to swap to the target tick, price limit, or point where input/output amount is exhausted
             (state.sqrtPriceX96, step.amountIn, step.amountOut, step.feeAmount) = SwapMath.computeSwapStep(
                 state.sqrtPriceX96,
-                (zeroForOne ? step.sqrtPriceNextX96 < sqrtPriceLimitX96 : step.sqrtPriceNextX96 > sqrtPriceLimitX96)
-                    ? sqrtPriceLimitX96
-                    : step.sqrtPriceNextX96,
+                getSqrtRatioTargetX96(zeroForOne, step.sqrtPriceNextX96, sqrtPriceLimitX96),
                 state.liquidity,
                 state.amountSpecifiedRemaining,
-                gs.fee
+                fee
             );
             if (exactInput) {
                 state.amountSpecifiedRemaining -= (step.amountIn + step.feeAmount).toInt256();
@@ -90,15 +56,6 @@ abstract contract UniV3likeQuoterCore {
                 state.amountSpecifiedRemaining += step.amountOut.toInt256();
                 state.amountCalculated = state.amountCalculated.add((step.amountIn + step.feeAmount).toInt256());
             }
-            // if the protocol fee is on, calculate how much is owed, decrement feeAmount, and increment protocolFee
-            if (cache.feeProtocol > 0) {
-                uint256 delta = step.feeAmount / cache.feeProtocol;
-                step.feeAmount -= delta;
-                state.protocolFee += uint128(delta);
-            }
-            // update global fee tracker
-            if (state.liquidity > 0)
-                state.feeGrowthGlobalX128 += FullMath.mulDiv(step.feeAmount, FixedPoint128.Q128, state.liquidity);
             // shift tick if we reached the next price
             if (state.sqrtPriceX96 == step.sqrtPriceNextX96) {
                 // if the tick is initialized, run the tick transition
@@ -106,8 +63,8 @@ abstract contract UniV3likeQuoterCore {
                     (,int128 liquidityNet,,,,,,) = getTicks(poolAddress, step.tickNext);
                     // if we're moving leftward, we interpret liquidityNet as the opposite sign
                     // safe because liquidityNet cannot be type(int128).min
-                    if (zeroForOne) liquidityNet = -liquidityNet;
-
+                    if (zeroForOne)
+                        liquidityNet = -liquidityNet;
                     state.liquidity = LiquidityMath.addDelta(state.liquidity, liquidityNet);
                 }
                 state.tick = zeroForOne ? step.tickNext - 1 : step.tickNext;
@@ -122,17 +79,71 @@ abstract contract UniV3likeQuoterCore {
             : (state.amountCalculated, amountSpecified - state.amountSpecifiedRemaining);
     }
 
-    function _blockTimestamp() internal view returns (uint32) {
-        return uint32(block.timestamp);
+    function getInitState(
+        address poolAddress,
+        bool zeroForOne,
+        int256 amountSpecified,
+        uint160 sqrtPriceLimitX96
+    ) internal view returns (int24 ts, uint16 fee, SwapState memory state) {
+        GlobalState memory gs = getPoolGlobalState(poolAddress);
+        checkSqrtPriceLimitWithinAllowed(zeroForOne, sqrtPriceLimitX96, gs.startPrice);
+        ts = getTickSpacing(poolAddress);
+        fee = gs.fee;
+        state = SwapState({
+            feeGrowthGlobalX128: feeGrowthGlobalX128(poolAddress, zeroForOne),
+            amountSpecifiedRemaining: amountSpecified,
+            liquidity: getLiquidity(poolAddress),
+            sqrtPriceX96: gs.startPrice,
+            amountCalculated: 0,
+            tick: gs.startTick,
+            protocolFee: 0
+        });
     }
+
+    function checkSqrtPriceLimitWithinAllowed(
+        bool zeroForOne,
+        uint160 sqrtPriceLimit, 
+        uint160 startPrice
+    ) internal pure {
+        bool withinAllowed = zeroForOne
+            ? sqrtPriceLimit < startPrice && sqrtPriceLimit > TickMath.MIN_SQRT_RATIO
+            : sqrtPriceLimit > startPrice && sqrtPriceLimit < TickMath.MAX_SQRT_RATIO;
+        require(withinAllowed, 'sqrtPriceLimit out of bounds');
+    }
+
+    function nextInitializedTickAndPrice(
+        address pool, 
+        int24 tick, 
+        int24 tickSpacing,
+        bool zeroForOne
+    ) internal view returns (int24 tickNext, bool initialized, uint160 sqrtPriceNextX96) {
+        (tickNext, initialized) = nextInitializedTickWithinOneWord(pool, tick, tickSpacing, zeroForOne);
+        // ensure that we do not overshoot the min/max tick, as the tick bitmap is not aware of these bounds
+        if (tickNext < TickMath.MIN_TICK)
+            tickNext = TickMath.MIN_TICK;
+        else if (tickNext > TickMath.MAX_TICK)
+            tickNext = TickMath.MAX_TICK;
+        // get the price for the next tick
+        sqrtPriceNextX96 = TickMath.getSqrtRatioAtTick(tickNext);
+    }
+
+    function getSqrtRatioTargetX96(
+        bool zeroForOne,
+        uint160 sqrtPriceNextX96,
+        uint160 sqrtPriceLimitX96
+    ) internal pure returns (uint160) {
+        return (zeroForOne ? sqrtPriceNextX96<sqrtPriceLimitX96 : sqrtPriceNextX96>sqrtPriceLimitX96)
+            ? sqrtPriceLimitX96
+            : sqrtPriceNextX96;
+    }
+
+    function feeGrowthGlobalX128(address pool, bool zeroForOne) internal virtual view returns (uint256);
 
     function getPoolGlobalState(address pool) internal virtual view returns (GlobalState memory);
     
-    function getTickSpacing(address pool) internal virtual view returns (int24);
-    
     function getLiquidity(address pool) internal virtual view returns (uint128);
-    
-    function feeGrowthGlobalX128(address pool, bool zeroForOne) internal virtual view returns (uint256);
+
+    function getTickSpacing(address pool) internal virtual view returns (int24);
     
     function nextInitializedTickWithinOneWord(
         address poolAddress,
