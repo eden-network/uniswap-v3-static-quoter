@@ -52,6 +52,11 @@ describe('Quoter:Kyber', async () => {
                 fix = await dogechainFixture(FORK_BLOCK); 
             });
 
+            async function logGasEstimate(params: any) {
+                const gas = await fix.StaticQuoter.estimateGas.quoteExactInputSingle(params)
+                console.log(`Gas: ${gas.toString()}`)
+            }
+
             context('static-Quoter and original-Quoter quotes match', async () => {
 
                 async function checkStaticMatchesOriginal(
@@ -63,6 +68,7 @@ describe('Quoter:Kyber', async () => {
                     const dyOriginal = await getOriginalQuoterV2Quote(params);
                     const dyStatic = await fix.StaticQuoter.quoteExactInputSingle(params);
                     expect(dyStatic).to.eq(dyOriginal);
+                    logGasEstimate(params);
                 }
 
                 async function getOriginalQuoterV2Quote(params: any) {
