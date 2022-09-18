@@ -1,6 +1,14 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 pragma solidity =0.7.6;
 
+struct GlobalState {
+    uint160 startPrice;
+    int24 startTick;
+    uint16 fee;
+    uint8 communityFeeToken0;
+    uint8 communityFeeToken1;
+}
+
 struct SwapCache {
     // the protocol fee for the input token
     uint8 feeProtocol;
@@ -51,10 +59,13 @@ struct StepComputations {
     uint256 feeAmount;
 }
 
-struct GlobalState {
-    uint160 startPrice;
-    int24 startTick;
-    uint16 fee;
-    uint8 communityFeeToken0;
-    uint8 communityFeeToken1;
+interface IUniV3likeQuoterCore {
+
+    function quote(
+        address poolAddress,
+        bool zeroForOne,
+        int256 amountSpecified,
+        uint160 sqrtPriceLimitX96
+    ) external view returns (int256 amount0, int256 amount1);
+
 }
