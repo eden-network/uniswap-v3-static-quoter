@@ -35,7 +35,8 @@
             "wwdoge": "0xB7ddC6414bf4F5515b52D8BdD69973Ae205ff101", 
             "usdc": "0x765277EebeCA2e31912C9946eAe1021199B39C61",
             "usdt": "0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D",
-            "eth": "0xB44a9B6905aF7c801311e8F4E76932ee959c663C"
+            "eth": "0xB44a9B6905aF7c801311e8F4E76932ee959c663C",
+            "dc": "0x7B4328c127B85369D9f82ca0503B000D09CF9180"
         },
         "protocols": {
             "quickswap": {

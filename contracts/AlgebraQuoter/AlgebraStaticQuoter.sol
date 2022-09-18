@@ -4,10 +4,10 @@ pragma abicoder v2;
 
 import '@uniswap/v3-periphery/contracts/base/PeripheryImmutableState.sol';
 import '@uniswap/v3-periphery/contracts/libraries/PoolAddress.sol';
-import '@uniswap/v3-periphery/contracts/libraries/Path.sol';
 
 import './interfaces/IAlgebraStaticQuoter.sol';
 import './interfaces/IAlgebraFactory.sol';
+import './lib/PathNoFee.sol';
 import './AlgebraQuoterCore.sol';
 
 contract AlgebraStaticQuoter is AlgebraQuoterCore {
@@ -15,7 +15,7 @@ contract AlgebraStaticQuoter is AlgebraQuoterCore {
     using LowGasSafeMath for int256;
     using SafeCast for uint256;
     using SafeCast for int256;
-    using Path for bytes;
+    using PathNoFee for bytes;
 
     address immutable factory;
 
@@ -57,8 +57,7 @@ contract AlgebraStaticQuoter is AlgebraQuoterCore {
     {
         uint256 i = 0;
         while (true) {
-            (address tokenIn, address tokenOut) = decodeFirstPool(path);
-
+            (address tokenIn, address tokenOut) = path.decodeFirstPool();
             // the outputs of prior swaps become the inputs to subsequent ones
             uint256 _amountOut =
                 quoteExactInputSingle(
@@ -69,7 +68,6 @@ contract AlgebraStaticQuoter is AlgebraQuoterCore {
                         sqrtPriceLimitX96: 0
                     })
                 );
-
             amountIn = _amountOut;
             i++;
 
@@ -82,17 +80,5 @@ contract AlgebraStaticQuoter is AlgebraQuoterCore {
         }
     }
 
-    function decodeFirstPool(bytes memory path) pure internal returns (address, address) {
-        return (toAddress(path, 0), toAddress(path, 20));
-    }
-
-}
-
-function toAddress(bytes memory _bytes, uint256 _start) pure returns (address res) {
-    require(_start + 20 >= _start, 'toAddress_overflow');
-    require(_bytes.length >= _start + 20, 'toAddress_outOfBounds');
-    assembly {
-        res := div(mload(add(add(_bytes, 0x20), _start)), 0x1000000000000000000000000)
-    }
 }
 
