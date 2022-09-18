@@ -1,0 +1,15 @@
+{
+    "ethereum": {
+        "tokens": {
+            "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+            "usdc": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            "comp": "0xc00e94Cb662C3520282E6f5717214004A7f26888"
+        }, 
+        "protocols": {
+            "uniswapV3": {
+                "quoterV2": "0x61fFE014bA17989E743c5F6cB21bF9697530B21e",
+                "factory": "0x1F98431c8aD98523631AE4a59f267346ea31F984"
+            }
+        }
+    }
+}

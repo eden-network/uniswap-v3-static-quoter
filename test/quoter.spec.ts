@@ -1,18 +1,19 @@
 import { ethers, config } from "hardhat";
 import { expect } from "chai";
-import { BigNumber } from "ethers";
-import { encodePath, quoterV2, setHardhatNetwork, ThenArgRecursive } from "./helpers";
+import { BigNumber, Signer } from "ethers";
 import { FeeAmount } from "@uniswap/v3-sdk";
+import { abi as QUOTERV2_ABI } from "@uniswap/v3-periphery/artifacts/contracts/lens/QuoterV2.sol/QuoterV2.json";
+
+import { encodePath, forkNetwork, deployContract, ThenArgRecursive } from "./helpers";
+import addresses from "./addresses.json";
+
+const { uniswapV3 } = addresses.ethereum.protocols;
+const { tokens } = addresses.ethereum;
 
 async function fixture() {
-    const accounts = await ethers.getSigners();
-    const deployer = accounts[0];
-
-    const reference = quoterV2(deployer);
-
-    const quoterFactory = await ethers.getContractFactory("UniswapV3StaticQuoter");
-    const quoter = await quoterFactory.deploy(await reference.factory(), await reference.WETH9());
-
+    const [ deployer ] = await ethers.getSigners();
+    const reference = await getQuoterV2();
+    const quoter = await deployUniswapV3StaticQuoter(deployer);
     return {
         deployer,
         quoter,
@@ -20,22 +21,25 @@ async function fixture() {
     };
 }
 
-async function ethereumFixture(blockNumber: number) {
-    await setHardhatNetwork({
-        rpcUrl: (config.networks as any).mainnet.url,
-        forkBlockNumber: blockNumber,
-        chainId: 1
-    });
+async function getQuoterV2() {
+    return ethers.getContractAt(QUOTERV2_ABI, uniswapV3.quoterV2);
+}
 
+async function deployUniswapV3StaticQuoter(deployer: Signer) {
+    return deployContract(
+        deployer, 
+        "UniswapV3StaticQuoter", 
+        [uniswapV3.factory, tokens.weth]
+    )
+}
+
+async function ethereumFixture(blockNumber: number) {
+    await forkNetwork('mainnet', blockNumber);
     return fixture();
 }
 
 describe("quoter", async () => {
     context("ethereum", () => {
-
-        const WETH = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2";
-        const USDC = "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48";
-        const COMP = "0xc00e94Cb662C3520282E6f5717214004A7f26888";
 
         context("15013603", async () => {
             let fix: ThenArgRecursive<ReturnType<typeof ethereumFixture>>;
@@ -49,8 +53,8 @@ describe("quoter", async () => {
                 const amountOut = BigNumber.from("31206401855667");
     
                 const params = {
-                    tokenIn: WETH,
-                    tokenOut: USDC,
+                    tokenIn: tokens.weth,
+                    tokenOut: tokens.usdc,
                     amountIn,
                     fee: FeeAmount.MEDIUM,
                     sqrtPriceLimitX96: 0
@@ -68,8 +72,8 @@ describe("quoter", async () => {
                 const amountOut = 0;
     
                 const params = {
-                    tokenIn: WETH,
-                    tokenOut: USDC,
+                    tokenIn: tokens.weth,
+                    tokenOut: tokens.usdc,
                     amountIn,
                     fee: FeeAmount.MEDIUM,
                     sqrtPriceLimitX96: 0
@@ -84,8 +88,8 @@ describe("quoter", async () => {
 
             it("weth .3% usdc: max", async () => {
                 const params = {
-                    tokenIn: WETH,
-                    tokenOut: USDC,
+                    tokenIn: tokens.weth,
+                    tokenOut: tokens.usdc,
                     amountIn: ethers.constants.MaxUint256,
                     fee: FeeAmount.MEDIUM,
                     sqrtPriceLimitX96: 0
@@ -98,7 +102,7 @@ describe("quoter", async () => {
             it("invalid token", async () => {
                 const params = {
                     tokenIn: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc3",
-                    tokenOut: USDC,
+                    tokenOut: tokens.usdc,
                     amountIn: ethers.utils.parseEther("1337"),
                     fee: FeeAmount.MEDIUM,
                     sqrtPriceLimitX96: 0
@@ -120,7 +124,7 @@ describe("quoter", async () => {
                 const amountIn = ethers.utils.parseUnits("31337", 6);
                 const amountOut = BigNumber.from("687578004838424621671");
 
-                const path = encodePath([USDC, WETH, COMP], [FeeAmount.LOW, FeeAmount.MEDIUM]);
+                const path = encodePath([tokens.usdc, tokens.weth, tokens.comp], [FeeAmount.LOW, FeeAmount.MEDIUM]);
 
                 const referenceOut = await fix.reference.callStatic.quoteExactInput(path, amountIn);
                 expect(referenceOut.amountOut).equals(amountOut);
