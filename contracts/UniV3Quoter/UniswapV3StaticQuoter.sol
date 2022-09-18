@@ -6,17 +6,21 @@ import '@uniswap/v3-periphery/contracts/base/PeripheryImmutableState.sol';
 import '@uniswap/v3-periphery/contracts/libraries/PoolAddress.sol';
 import '@uniswap/v3-periphery/contracts/libraries/Path.sol';
 
-import { IUniswapV3StaticQuoter } from './interfaces/IUniswapV3StaticQuoter.sol';
+import './interfaces/IUniswapV3StaticQuoter.sol';
 import './UniV3QuoterCore.sol';
 
-contract UniswapV3StaticQuoter is PeripheryImmutableState, IUniswapV3StaticQuoter, UniV3QuoterCore {
+contract UniswapV3StaticQuoter is IUniswapV3StaticQuoter, UniV3QuoterCore {
     using LowGasSafeMath for uint256;
     using LowGasSafeMath for int256;
     using SafeCast for uint256;
     using SafeCast for int256;
     using Path for bytes;
 
-    constructor(address _factory, address _WETH9) PeripheryImmutableState(_factory, _WETH9) {}
+    address immutable factory;
+
+    constructor(address _factory) {
+        factory = _factory;
+    }
 
     function getPool(
         address tokenA,

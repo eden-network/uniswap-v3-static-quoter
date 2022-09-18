@@ -5,23 +5,6 @@ struct GlobalState {
     uint160 startPrice;
     int24 startTick;
     uint16 fee;
-    uint8 communityFeeToken0;
-    uint8 communityFeeToken1;
-}
-
-struct SwapCache {
-    // the protocol fee for the input token
-    uint8 feeProtocol;
-    // liquidity at the beginning of the swap
-    uint128 liquidityStart;
-    // the timestamp of the current block
-    uint32 blockTimestamp;
-    // the current value of the tick accumulator, computed only if we cross an initialized tick
-    int56 tickCumulative;
-    // the current value of seconds per liquidity accumulator, computed only if we cross an initialized tick
-    uint160 secondsPerLiquidityCumulativeX128;
-    // whether we've computed and cached the above two accumulators
-    bool computedLatestObservation;
 }
 
 // the top level state of the swap, the results of which are recorded in storage at the end
@@ -34,10 +17,6 @@ struct SwapState {
     uint160 sqrtPriceX96;
     // the tick associated with the current price
     int24 tick;
-    // the global fee growth of the input token
-    uint256 feeGrowthGlobalX128;
-    // amount of input token paid as protocol fee
-    uint128 protocolFee;
     // the current liquidity in range
     uint128 liquidity;
 }

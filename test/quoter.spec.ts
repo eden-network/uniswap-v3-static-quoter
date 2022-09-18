@@ -29,7 +29,7 @@ async function deployUniswapV3StaticQuoter(deployer: Signer) {
     return deployContract(
         deployer, 
         "UniswapV3StaticQuoter", 
-        [uniswapV3.factory, tokens.weth]
+        [uniswapV3.factory]
     )
 }
 

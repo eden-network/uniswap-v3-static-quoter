@@ -90,13 +90,11 @@ abstract contract UniV3likeQuoterCore {
         ts = getTickSpacing(poolAddress);
         fee = gs.fee;
         state = SwapState({
-            feeGrowthGlobalX128: feeGrowthGlobalX128(poolAddress, zeroForOne),
             amountSpecifiedRemaining: amountSpecified,
             liquidity: getLiquidity(poolAddress),
             sqrtPriceX96: gs.startPrice,
             amountCalculated: 0,
-            tick: gs.startTick,
-            protocolFee: 0
+            tick: gs.startTick
         });
     }
 
@@ -136,8 +134,6 @@ abstract contract UniV3likeQuoterCore {
             ? sqrtPriceLimitX96
             : sqrtPriceNextX96;
     }
-
-    function feeGrowthGlobalX128(address pool, bool zeroForOne) internal virtual view returns (uint256);
 
     function getPoolGlobalState(address pool) internal virtual view returns (GlobalState memory);
     

@@ -9,10 +9,8 @@ contract UniV3QuoterCore is UniV3likeQuoterCore {
     function getPoolGlobalState(
         address pool
     ) internal override view returns (GlobalState memory gs) {
-        uint8 feeProtocol;
         gs.fee = uint16(IUniswapV3Pool(pool).fee());
-        (gs.startPrice, gs.startTick,,,,feeProtocol,) = IUniswapV3Pool(pool).slot0();
-        (gs.communityFeeToken0, gs.communityFeeToken1) = (feeProtocol%16, feeProtocol>>4);
+        (gs.startPrice, gs.startTick,,,,,) = IUniswapV3Pool(pool).slot0();
     }
     
     function getTickSpacing(
@@ -23,15 +21,6 @@ contract UniV3QuoterCore is UniV3likeQuoterCore {
     
     function getLiquidity(address pool) internal override view returns (uint128) {
         return IUniswapV3Pool(pool).liquidity();
-    }
-    
-    function feeGrowthGlobalX128(
-        address pool, 
-        bool zeroForOne
-    ) internal override view returns (uint256) {
-        return zeroForOne 
-            ? IUniswapV3Pool(pool).feeGrowthGlobal0X128() 
-            : IUniswapV3Pool(pool).feeGrowthGlobal1X128();
     }
     
     function nextInitializedTickWithinOneWord(

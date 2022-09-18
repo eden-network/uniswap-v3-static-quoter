@@ -1,20 +1,14 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 pragma solidity =0.7.6;
 
-import '../UniV3likeQuoterCore.sol';
 import './interfaces/IAlgebraPool.sol';
 import './lib/TickBitmapAlgebra.sol';
+import '../UniV3likeQuoterCore.sol';
 
 contract AlgebraQuoterCore is UniV3likeQuoterCore { 
 
     function getPoolGlobalState(address pool) internal override view returns (GlobalState memory gs) {
-        (
-            gs.startPrice,
-            gs.startTick,
-            gs.fee,,
-            gs.communityFeeToken0,
-            gs.communityFeeToken1,
-        ) = IAlgebraPool(pool).globalState();
+        (gs.startPrice, gs.startTick, gs.fee,,,,) = IAlgebraPool(pool).globalState();
     }
 
     function getTickSpacing(
@@ -25,15 +19,6 @@ contract AlgebraQuoterCore is UniV3likeQuoterCore {
     
     function getLiquidity(address pool) internal override view returns (uint128) {
         return IAlgebraPool(pool).liquidity();
-    }
-    
-    function feeGrowthGlobalX128(
-        address pool, 
-        bool zeroForOne
-    ) internal override view returns (uint256) {
-        return zeroForOne 
-            ? IAlgebraPool(pool).totalFeeGrowth0Token() 
-            : IAlgebraPool(pool).totalFeeGrowth1Token();
     }
     
     function nextInitializedTickWithinOneWord(

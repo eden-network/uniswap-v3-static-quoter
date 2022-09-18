@@ -1,17 +1,7 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 pragma solidity =0.7.6;
 
-import '@uniswap/v3-core/contracts/libraries/LowGasSafeMath.sol';
-import '@uniswap/v3-core/contracts/libraries/SafeCast.sol';
-import '@uniswap/v3-core/contracts/libraries/Tick.sol';
-import '@uniswap/v3-core/contracts/libraries/Position.sol';
-import '@uniswap/v3-core/contracts/libraries/FullMath.sol';
-import '@uniswap/v3-core/contracts/libraries/FixedPoint128.sol';
-import '@uniswap/v3-core/contracts/libraries/TransferHelper.sol';
-import '@uniswap/v3-core/contracts/libraries/TickMath.sol';
-import '@uniswap/v3-core/contracts/libraries/LiquidityMath.sol';
-import '@uniswap/v3-core/contracts/libraries/SqrtPriceMath.sol';
-import '@uniswap/v3-core/contracts/libraries/SwapMath.sol';
+import '@uniswap/v3-core/contracts/interfaces/IUniswapV3Pool.sol';
 import '@uniswap/v3-core/contracts/libraries/BitMath.sol';
 
 import '../interfaces/IAlgebraPool.sol';
