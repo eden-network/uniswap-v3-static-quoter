@@ -1,6 +1,6 @@
-import { ethers, network, config } from 'hardhat';
-import { BigNumber, Signer, VoidSigner } from 'ethers';
+import { ethers, network, config } from "hardhat";
 import { FeeAmount } from "@uniswap/v3-sdk";
+import { Signer } from "ethers";
 
 export const setHardhatNetwork = async (
     { forkBlockNumber, chainId, rpcUrl }:
@@ -46,15 +46,15 @@ export function encodePath(path: string[], fees: FeeAmount[]): string {
     const FEE_SIZE = 3;
 
     if (path.length != fees.length + 1) {
-      throw new Error('path/fee lengths do not match')
+      throw new Error("path/fee lengths do not match")
     }
   
-    let encoded = '0x'
+    let encoded = "0x"
     for (let i = 0; i < fees.length; i++) {
       // 20 byte encoding of the address
       encoded += path[i].slice(2)
       // 3 byte encoding of the fee
-      encoded += fees[i].toString(16).padStart(2 * FEE_SIZE, '0')
+      encoded += fees[i].toString(16).padStart(2 * FEE_SIZE, "0")
     }
     // encode the final token
     encoded += path[path.length - 1].slice(2)
@@ -63,7 +63,7 @@ export function encodePath(path: string[], fees: FeeAmount[]): string {
 }
 
 export function encodePathNoFees(path: string[]): string {
-    let encoded = '0x'
+    let encoded = "0x"
     for (let i = 0; i < (path.length-1); i++) {
       // 20 byte encoding of the address
       encoded += path[i].slice(2)

@@ -15,7 +15,7 @@ const { kyber } = addresses.avalanche.protocols
 
 
 async function avalancheFixture(blockNumber: number) {
-    await forkNetwork('avalanche', blockNumber);
+    await forkNetwork("avalanche", blockNumber);
     return fixture();
 }
 
@@ -29,19 +29,19 @@ async function deployKyberStaticQuoter() {
     const [ deployer ] = await ethers.getSigners() 
     return deployContract(
         deployer, 
-        'KyberStaticQuoter',
+        "KyberStaticQuoter",
         [kyber.factory]
     );
 }
 
 async function getKyberQuoterV2() {
     return ethers.getContractAt(
-        require('../abis/KyberQuoterV2.json'),
+        require("../abis/KyberQuoterV2.json"),
         kyber.quoterV2
     );
 }
 
-describe('Quoter:Kyber', async () => {
+describe("Quoter:Kyber", async () => {
 
     context("avalanche", () => {
 
@@ -100,55 +100,55 @@ describe('Quoter:Kyber', async () => {
                 fix = await avalancheFixture(FORK_BLOCK); 
             });
 
-            context('static-Quoter and original-Quoter quotes match :: single', async () => {
+            context("static-Quoter and original-Quoter quotes match :: single", async () => {
 
                 it("YUSD -> USDC (0.01%) :: 1000 YUSD", async () => {
                     await checkStaticMatchesOriginalSingle(
-                        ethers.utils.parseUnits('1000', 18),
+                        ethers.utils.parseUnits("1000", 18),
                         tokens.yusd,
                         tokens.usdc,
-                        10, // Kyber doesn't use bps
+                        10, // Kyber doesn"t use bps
                     )
                 })
 
                 it("WAVAX -> SAVAX (0.01%) :: 1000 WAVAX", async () => {
                     await checkStaticMatchesOriginalSingle(
-                        ethers.utils.parseUnits('1000', 18),
+                        ethers.utils.parseUnits("1000", 18),
                         tokens.wavax,
                         tokens.savax,
-                        10, // Kyber doesn't use bps
+                        10, // Kyber doesn"t use bps
                     )
                 })
 
                 it("YUSD -> SAVAX (0.04%) :: 333_333 YUSD", async () => {
                     await checkStaticMatchesOriginalSingle(
-                        ethers.utils.parseUnits('333333', 18),
+                        ethers.utils.parseUnits("333333", 18),
                         tokens.yusd,
                         tokens.savax,
-                        40, // Kyber doesn't use bps
+                        40, // Kyber doesn"t use bps
                     )
 
                 })
 
                 it("SAVAX -> YUSD (0.04%) :: 1000 SAVAX", async () => {
                     await checkStaticMatchesOriginalSingle(
-                        ethers.utils.parseUnits('1000', 18),
+                        ethers.utils.parseUnits("1000", 18),
                         tokens.savax,
                         tokens.yusd,
-                        40, // Kyber doesn't use bps
+                        40, // Kyber doesn"t use bps
                     )
                 })
 
             })
 
 
-            context('static-Quoter and original-Quoter quotes match :: path', async () => {
+            context("static-Quoter and original-Quoter quotes match :: path", async () => {
 
                 it("SAVAX -(0.04%)-> YUSD -(0.01%)-> USDC -> :: 100 SAVAX", async () => {
                     await checkStaticMatchesOriginalPath(
-                        ethers.utils.parseUnits('100', 18),
+                        ethers.utils.parseUnits("100", 18),
                         [tokens.savax, tokens.yusd, tokens.usdc],
-                        [40, 10], // Kyber doesn't use bps
+                        [40, 10], // Kyber doesn"t use bps
                     )
                 })
 

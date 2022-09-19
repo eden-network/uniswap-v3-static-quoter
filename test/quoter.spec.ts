@@ -1,8 +1,8 @@
-import { ethers, config } from "hardhat";
-import { expect } from "chai";
-import { BigNumber, Signer } from "ethers";
-import { FeeAmount } from "@uniswap/v3-sdk";
 import { abi as QUOTERV2_ABI } from "@uniswap/v3-periphery/artifacts/contracts/lens/QuoterV2.sol/QuoterV2.json";
+import { FeeAmount } from "@uniswap/v3-sdk";
+import { BigNumber, Signer } from "ethers";
+import { ethers } from "hardhat";
+import { expect } from "chai";
 
 import { encodePath, forkNetwork, deployContract, ThenArgRecursive } from "./helpers";
 import addresses from "./addresses.json";
@@ -34,7 +34,7 @@ async function deployUniswapV3StaticQuoter(deployer: Signer) {
 }
 
 async function ethereumFixture(blockNumber: number) {
-    await forkNetwork('mainnet', blockNumber);
+    await forkNetwork("mainnet", blockNumber);
     return fixture();
 }
 

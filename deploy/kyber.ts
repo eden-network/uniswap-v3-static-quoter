@@ -8,14 +8,14 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     const { deploy, log } = deployments;
 
     
-    const allowedNetworks = ['avalanche', 'mainnet', 'optimism', 'arbitrum']
+    const allowedNetworks = ["avalanche", "mainnet", "optimism", "arbitrum"]
     const contractName = "KyberStaticQuoter";
     const args = [ addresses.avalanche.protocols.kyber.factory ]
     const { deployer } = await getNamedAccounts();
 
 
     if (!allowedNetworks.includes(network.name))
-        throw new Error(`Wrong network! Only '${allowedNetworks}' supported`);
+        throw new Error(`Wrong network! Only "${allowedNetworks}" supported`);
 
     log("1) Deploy contract");
     const deployResult: any = await deploy(contractName, {
@@ -33,4 +33,4 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 };
 
 export default func;
-func.tags = [ 'kyber', 'avalanche' ]
+func.tags = [ "kyber", "avalanche" ]
