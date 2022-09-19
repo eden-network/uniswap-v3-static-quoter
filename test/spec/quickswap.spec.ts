@@ -41,7 +41,7 @@ async function getAlgebraQuoterV2() {
     );
 }
 
-describe("Quoter:Kyber", async () => {
+describe("Quoter:Quickswap", async () => {
 
     context("dogechain", () => {
 
