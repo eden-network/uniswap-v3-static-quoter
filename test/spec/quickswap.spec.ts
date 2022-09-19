@@ -7,8 +7,8 @@ import {
     ThenArgRecursive, 
     deployContract, 
     forkNetwork
-} from "./helpers";
-import addresses from "./addresses.json";
+} from "../helpers";
+import addresses from "../addresses.json";
 
 
 const { tokens } = addresses.dogechain
@@ -36,7 +36,7 @@ async function deployAlgebraStaticQuoter() {
 
 async function getAlgebraQuoterV2() {
     return ethers.getContractAt(
-        require("../abis/AlgebraQuoterV2.json"),
+        require("../../abis/AlgebraQuoterV2.json"),
         quickswap.quoterV2
     );
 }

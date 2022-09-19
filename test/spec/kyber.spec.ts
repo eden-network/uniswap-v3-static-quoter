@@ -7,8 +7,8 @@ import {
     deployContract,
     forkNetwork,
     encodePath,
-} from "./helpers";
-import addresses from "./addresses.json";
+} from "../helpers";
+import addresses from "../addresses.json";
 
 const { tokens } = addresses.avalanche
 const { kyber } = addresses.avalanche.protocols
@@ -36,7 +36,7 @@ async function deployKyberStaticQuoter() {
 
 async function getKyberQuoterV2() {
     return ethers.getContractAt(
-        require("../abis/KyberQuoterV2.json"),
+        require("../../abis/KyberQuoterV2.json"),
         kyber.quoterV2
     );
 }

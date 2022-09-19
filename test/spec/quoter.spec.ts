@@ -4,8 +4,8 @@ import { BigNumber, Signer } from "ethers";
 import { ethers } from "hardhat";
 import { expect } from "chai";
 
-import { encodePath, forkNetwork, deployContract, ThenArgRecursive } from "./helpers";
-import addresses from "./addresses.json";
+import { encodePath, forkNetwork, deployContract, ThenArgRecursive } from "../helpers";
+import addresses from "../addresses.json";
 
 const { uniswapV3 } = addresses.ethereum.protocols;
 const { tokens } = addresses.ethereum;
