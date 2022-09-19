@@ -3,8 +3,8 @@ pragma solidity =0.7.6;
 
 import '@uniswap/v3-core/contracts/libraries/TickMath.sol';
 
-import "./interfaces/IKyberQuoterCore.sol";
-import "./interfaces/IKyberPool.sol";
+import './interfaces/IKyberQuoterCore.sol';
+import './interfaces/IKyberPool.sol';
 import './lib/SwapMath.sol';
 import './lib/SafeCast.sol';
 

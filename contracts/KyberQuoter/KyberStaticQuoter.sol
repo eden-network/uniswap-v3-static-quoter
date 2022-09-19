@@ -2,11 +2,10 @@
 pragma solidity =0.7.6;
 pragma abicoder v2;
 
-import '@uniswap/v3-periphery/contracts/base/PeripheryImmutableState.sol';
 import '@uniswap/v3-periphery/contracts/libraries/PoolAddress.sol';
 import '@uniswap/v3-periphery/contracts/libraries/Path.sol';
 
-import { IUniswapV3StaticQuoter } from '../UniV3Quoter/interfaces/IUniswapV3StaticQuoter.sol';
+import '../UniV3Quoter/interfaces/IUniswapV3StaticQuoter.sol';
 import './interfaces/IKyberFactory.sol';
 import './KyberQuoterCore.sol';
 
@@ -36,7 +35,7 @@ contract KyberStaticQuoter is IUniswapV3StaticQuoter, KyberQuoterCore {
     {
         bool zeroForOne = params.tokenIn < params.tokenOut;
         address pool = getPool(params.tokenIn, params.tokenOut, params.fee);
-        require(pool != address(0), "Pool not found");
+        require(pool != address(0), 'Pool not found');
         (int256 amount0, int256 amount1) = quote(
             pool,
             zeroForOne,

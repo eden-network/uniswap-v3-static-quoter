@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 pragma solidity =0.7.6;
 
-import { IUniV3likeQuoterCore } from "../../IUniV3likeQuoterCore.sol";
+import { IUniV3likeQuoterCore } from '../../IUniV3likeQuoterCore.sol';
 
 // temporary swap variables, some of which will be used to update the pool state
 struct SwapData {

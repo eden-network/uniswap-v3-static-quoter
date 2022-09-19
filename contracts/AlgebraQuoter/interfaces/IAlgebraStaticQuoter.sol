@@ -3,7 +3,7 @@
 pragma solidity =0.7.6;
 pragma abicoder v2;
 
-import "../../IUniV3likeQuoterCore.sol";
+import '../../IUniV3likeQuoterCore.sol';
 
 struct QuoteExactInputSingleParams {
     address tokenIn;

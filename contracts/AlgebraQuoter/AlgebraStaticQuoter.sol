@@ -37,7 +37,7 @@ contract AlgebraStaticQuoter is AlgebraQuoterCore {
     {
         bool zeroForOne = params.tokenIn < params.tokenOut;
         address pool = getPool(params.tokenIn, params.tokenOut);
-        require(pool != address(0), "Pool not found");
+        require(pool != address(0), 'Pool not found');
         (int256 amount0, int256 amount1) = quote(
             pool,
             zeroForOne,
