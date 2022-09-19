@@ -7,7 +7,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     const { deployments, getNamedAccounts, network } = hre;
     const { deploy, log } = deployments;
 
-    
+    // KyberElastic has the same deployment address for factory across multiple networks 
     const allowedNetworks = ["avalanche", "mainnet", "optimism", "arbitrum"]
     const contractName = "KyberStaticQuoter";
     const args = [ addresses.avalanche.protocols.kyber.factory ]
