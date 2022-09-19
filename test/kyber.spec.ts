@@ -127,6 +127,16 @@ describe('Quoter:Kyber', async () => {
                         tokens.savax,
                         40, // Kyber doesn't use bps
                     )
+
+                })
+
+                it("SAVAX -> YUSD (0.04%) :: 1000 SAVAX", async () => {
+                    await checkStaticMatchesOriginalSingle(
+                        ethers.utils.parseUnits('1000', 18),
+                        tokens.savax,
+                        tokens.yusd,
+                        40, // Kyber doesn't use bps
+                    )
                 })
 
             })

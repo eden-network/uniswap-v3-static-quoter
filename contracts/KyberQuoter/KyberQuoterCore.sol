@@ -1,12 +1,10 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 pragma solidity =0.7.6;
 
-import '@uniswap/v3-core/contracts/libraries/LowGasSafeMath.sol';
 import '@uniswap/v3-core/contracts/libraries/TickMath.sol';
 
 import "./interfaces/IKyberQuoterCore.sol";
 import "./interfaces/IKyberPool.sol";
-import './lib/TickBitmap.sol';
 import './lib/SwapMath.sol';
 import './lib/SafeCast.sol';
 
@@ -69,6 +67,11 @@ contract KyberQuoterCore {
                 swapData.reinvestL += deltaL.toUint128();
             }
 
+            // if price has not reached the next sqrt price
+            if (swapData.sqrtP != swapData.nextSqrtP) {
+                swapData.currentTick = TickMath.getTickAtSqrtRatio(swapData.sqrtP);
+                break;
+            }
             swapData.currentTick = willUpTick ? tempNextTick : tempNextTick - 1;
             // if tempNextTick is not next initialized tick
             if (tempNextTick != swapData.nextTick)
@@ -95,14 +98,12 @@ contract KyberQuoterCore {
         uint128 reinvestL,
         uint160 sqrtP,
         int24 currentTick,
-        int24 nextTick_
+        int24 nextTick
     ) {
-        int24 nearestCurrentTick;
-        (sqrtP, currentTick, nearestCurrentTick,) = IKyberPool(poolAddress).getPoolState();
+        (sqrtP, currentTick, nextTick,) = IKyberPool(poolAddress).getPoolState();
         (baseL, reinvestL,) = IKyberPool(poolAddress).getLiquidityState();
-        nextTick_ = willUpTick
-            ? getNextInitializedTick(poolAddress, nextTick_)
-            : nearestCurrentTick;
+        if (willUpTick)
+            nextTick = getNextInitializedTick(poolAddress, nextTick);
     }
 
     function checkSqrtPriceLimitWithinAllowed(

@@ -11,10 +11,7 @@ import './interfaces/IKyberFactory.sol';
 import './KyberQuoterCore.sol';
 
 contract KyberStaticQuoter is IUniswapV3StaticQuoter, KyberQuoterCore {
-    using LowGasSafeMath for uint256;
-    using LowGasSafeMath for int256;
     using SafeCast for uint256;
-    using SafeCast for int256;
     using Path for bytes;
 
     address immutable factory;
