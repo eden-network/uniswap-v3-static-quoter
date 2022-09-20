@@ -1,4 +1,4 @@
-import { HardhatUserConfig, task } from "hardhat/config";
+import { HardhatUserConfig } from "hardhat/config";
 import * as dotenv from "dotenv";
 import "@nomiclabs/hardhat-ethers";
 import "@nomiclabs/hardhat-waffle";
@@ -9,6 +9,19 @@ import "hardhat-deploy-ethers";
 
 dotenv.config();
 
+function getExplorerApiKey() {
+    const networkNameForEnvKey: any = {
+        "avalanche": "SNOWTRACE_API_KEY",
+        "mainnet": "ETHERSCAN_API_KEY",
+        "arbitrum": "ARBISCAN_API_KEY",
+        "optimism": "OPSCAN_API_KEY",
+    }
+    const [ networkName ] = process.argv.flatMap((e, i, a) => e == '--network' ? [ a[i+1] ] : [])
+    const envKey = networkNameForEnvKey[networkName]
+    if (envKey)
+        return process.env[envKey]
+}
+
 const ETHEREUM_RPC = process.env.ETHEREUM_RPC ?? "";
 const OPTIMISM_RPC = process.env.OPTIMISM_RPC ?? "";
 const ARBITRUM_RPC = process.env.ARBITRUM_RPC ?? "";
@@ -16,7 +29,7 @@ const AVALANCHE_RPC = process.env.AVALANCHE_RPC ?? "";
 const DOGECHAIN_RPC = process.env.DOGECHAIN_RPC ?? "";
 const DEPLOYER_ADDRESS = process.env.DEPLOYER_ADDRESS as string;
 const DEPLOYER_PRIVATE_KEY = process.env.DEPLOYER_PRIVATE_KEY as string;
-const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY;
+const ETHERSCAN_API_KEY = getExplorerApiKey();
 
 const mainnetConfig = {
     url: ETHEREUM_RPC,
