@@ -1,0 +1,49 @@
+{
+    "ethereum": {
+        "tokens": {
+            "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+            "usdc": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+            "comp": "0xc00e94Cb662C3520282E6f5717214004A7f26888"
+        }, 
+        "protocols": {
+            "uniswapV3": {
+                "quoterV2": "0x61fFE014bA17989E743c5F6cB21bF9697530B21e",
+                "factory": "0x1F98431c8aD98523631AE4a59f267346ea31F984"
+            }
+        }
+    },
+    "avalanche": {
+        "tokens": {
+            "wavax": "0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7", 
+            "savax": "0x2b2C81e08f1Af8835a78Bb2A90AE924ACE0eA4bE",
+            "usdc": "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
+            "yusd": "0x111111111111ed1D73f860F57b2798b683f2d325"
+        },
+        "protocols": {
+            "kyber": {
+                "pools": {
+                    "yusd_usdc": "0x42845783dee627f47b40b5ad7f1c5147c052a21c",
+                    "wavax_savax": "0x897a83cf016f33fb061e756e4ca89baa9f17990a"
+                },
+                "quoterV2": "0x0D125c15D54cA1F8a813C74A81aEe34ebB508C1f", 
+                "factory": "0x5F1dddbf348aC2fbe22a163e30F99F9ECE3DD50a"
+            }
+        }
+    },
+    "dogechain": {
+        "tokens": {
+            "wwdoge": "0xB7ddC6414bf4F5515b52D8BdD69973Ae205ff101", 
+            "usdc": "0x765277EebeCA2e31912C9946eAe1021199B39C61",
+            "usdt": "0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D",
+            "eth": "0xB44a9B6905aF7c801311e8F4E76932ee959c663C",
+            "dc": "0x7B4328c127B85369D9f82ca0503B000D09CF9180"
+        },
+        "protocols": {
+            "quickswap": {
+                "pools": {},
+                "quoterV2": "0xd8E1E7009802c914b0d39B31Fc1759A865b727B1", 
+                "factory": "0xd2480162Aa7F02Ead7BF4C127465446150D58452"
+            }
+        }
+    }
+}

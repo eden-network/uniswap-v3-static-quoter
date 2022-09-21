@@ -1,7 +1,6 @@
-import { ethers, network } from 'hardhat';
-import { abi as QUOTERV2_ABI } from "@uniswap/v3-periphery/artifacts/contracts/lens/QuoterV2.sol/QuoterV2.json";
-import { Signer } from 'ethers';
+import { ethers, network, config } from "hardhat";
 import { FeeAmount } from "@uniswap/v3-sdk";
+import { Signer } from "ethers";
 
 export const setHardhatNetwork = async (
     { forkBlockNumber, chainId, rpcUrl }:
@@ -25,33 +24,52 @@ export type ThenArgRecursive<T> = T extends PromiseLike<infer U>
     ? ThenArgRecursive<U>
     : T;
 
-export function quoterV2(signer: Signer) {
-    return new ethers.Contract(
-        "0x61fFE014bA17989E743c5F6cB21bF9697530B21e",
-        QUOTERV2_ABI,
-        signer
-    );
+export async function forkNetwork(networkName: string, blockNumber: number) {
+    const networkConfig = config.networks[networkName];
+    await setHardhatNetwork({
+        rpcUrl: (networkConfig as any).url,
+        forkBlockNumber: blockNumber,
+        chainId: (networkConfig as any).chainId,
+    })
+}
+
+export async function deployContract(
+    deployer: Signer, 
+    contract: string, 
+    args?: any[]
+) {
+    return ethers.getContractFactory(contract)
+        .then(f => f.connect(deployer).deploy(...(args || [])))
 }
 
 export function encodePath(path: string[], fees: FeeAmount[]): string {
-    const ADDR_SIZE = 20;
     const FEE_SIZE = 3;
-    const OFFSET = ADDR_SIZE + FEE_SIZE;
-    const DATA_SIZE = OFFSET + ADDR_SIZE;
 
     if (path.length != fees.length + 1) {
-      throw new Error('path/fee lengths do not match')
+      throw new Error("path/fee lengths do not match")
     }
   
-    let encoded = '0x'
+    let encoded = "0x"
     for (let i = 0; i < fees.length; i++) {
       // 20 byte encoding of the address
       encoded += path[i].slice(2)
       // 3 byte encoding of the fee
-      encoded += fees[i].toString(16).padStart(2 * FEE_SIZE, '0')
+      encoded += fees[i].toString(16).padStart(2 * FEE_SIZE, "0")
     }
     // encode the final token
     encoded += path[path.length - 1].slice(2)
   
     return encoded.toLowerCase()
-  }
+}
+
+export function encodePathNoFees(path: string[]): string {
+    let encoded = "0x"
+    for (let i = 0; i < (path.length-1); i++) {
+      // 20 byte encoding of the address
+      encoded += path[i].slice(2)
+    }
+    // encode the final token
+    encoded += path[path.length - 1].slice(2)
+  
+    return encoded.toLowerCase()
+}

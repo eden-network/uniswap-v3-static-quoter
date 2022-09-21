@@ -13,6 +13,7 @@ artifacts
 *.code-workspace
 
 # Local History for Visual Studio Code
+.vscode
 .history/
 
 .env
