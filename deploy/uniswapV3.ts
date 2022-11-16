@@ -8,7 +8,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     const { deploy, log } = deployments;
 
     
-    const allowedNetworks = ["optimism", "arbitrum", "mainnet"]
+    const allowedNetworks = ["optimism", "arbitrum", "mainnet", "polygon"]
     const contractName = "UniswapV3StaticQuoter";
     const args = [ addresses.ethereum.protocols.uniswapV3.factory ]
     const { deployer } = await getNamedAccounts();
