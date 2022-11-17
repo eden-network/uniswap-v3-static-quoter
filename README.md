@@ -20,4 +20,6 @@ Has similar interface to the official [QuoterV2](https://docs.uniswap.org/protoc
 | Optimism  | KyberElastic | `0xf2acd5F10E16BCd2b436701647513bB6C20cF62F` |
 | Arbitrum  | KyberElastic | `0xf2acd5F10E16BCd2b436701647513bB6C20cF62F` |
 | Avalanche | KyberElastic | `0x14ec368E625b1d7a0cC5A9E381794CF56d6224EA` |
+| Polygon   | KyberElastic | `0x6524fDB494679a12B2f1d1B051D8dEedB2E5cc25` |
 | Dogechain | Quickswap    | `0x4a6c794192831fB9F4782E61Bec05d6C5cC9F3eA` |
+| Polygon   | Quickswap    | `0x2E0A046481c676235B806Bd004C4b492C850fb34` |

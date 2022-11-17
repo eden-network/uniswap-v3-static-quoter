@@ -8,14 +8,14 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     const { deploy, log } = deployments;
 
     // KyberElastic has the same deployment address for factory across multiple networks 
-    const allowedNetworks = ["avalanche", "mainnet", "optimism", "arbitrum"]
-    const contractName = "KyberStaticQuoter";
-    const args = [ addresses.avalanche.protocols.kyber.factory ]
-    const { deployer } = await getNamedAccounts();
-
-
+    const allowedNetworks = ["avalanche", "mainnet", "optimism", "arbitrum", "polygon"]
     if (!allowedNetworks.includes(network.name))
         throw new Error(`Wrong network! Only "${allowedNetworks}" supported`);
+    const networkAddresses: any = Object.entries(addresses).find(([key, _]) => key == network.name)?.[1];
+
+    const contractName = "KyberStaticQuoter";
+    const args = [ networkAddresses.protocols.kyber.factory ]
+    const { deployer } = await getNamedAccounts();
 
     log("1) Deploy contract");
     const deployResult: any = await deploy(contractName, {
@@ -33,4 +33,4 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 };
 
 export default func;
-func.tags = [ "kyber", "avalanche" ]
+func.tags = [ "kyber" ];

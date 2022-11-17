@@ -2,20 +2,20 @@ import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
 
 import addresses from "../test/addresses.json";
+import { network } from "hardhat";
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     const { deployments, getNamedAccounts, network } = hre;
     const { deploy, log } = deployments;
 
-    
-    const allowedNetworks = ["dogechain"]
-    const contractName = "AlgebraStaticQuoter";
-    const args = [ addresses.dogechain.protocols.quickswap.factory ]
-    const { deployer } = await getNamedAccounts();
-
-
+    const allowedNetworks = ["dogechain", "polygon"];
     if (!allowedNetworks.includes(network.name))
         throw new Error(`Wrong network! Only "${allowedNetworks}" supported`);
+    const networkAddresses: any = Object.entries(addresses).find(([key, _]) => key == network.name)?.[1];
+
+    const contractName = "AlgebraStaticQuoter";
+    const args = [ networkAddresses.protocols.quickswap.factory ];
+    const { deployer } = await getNamedAccounts();
 
     log("1) Deploy contract");
     const deployResult: any = await deploy(contractName, {
@@ -33,4 +33,4 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 };
 
 export default func;
-func.tags = [ "quickswap", "dogechain" ]
+func.tags = [ "quickswap" ];
