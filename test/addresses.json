@@ -55,5 +55,12 @@
                 "factory": "0x5F1dddbf348aC2fbe22a163e30F99F9ECE3DD50a"
             }
         }
+    }, 
+    "arbitrum": {
+        "protocols": {
+            "camelot": {
+                "factory": "0xd490F2F6990C0291597fd1247651b4E0dCF684Dd"
+            }
+        }
     }
 }

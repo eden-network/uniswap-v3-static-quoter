@@ -23,3 +23,4 @@ Has similar interface to the official [QuoterV2](https://docs.uniswap.org/protoc
 | Polygon   | KyberElastic | `0x6524fDB494679a12B2f1d1B051D8dEedB2E5cc25` |
 | Dogechain | Quickswap    | `0x4a6c794192831fB9F4782E61Bec05d6C5cC9F3eA` |
 | Polygon   | Quickswap    | `0x2E0A046481c676235B806Bd004C4b492C850fb34` |
+| Arbitrum  | Camelot      | `0x11E68A3CE9A5A0F95ca9c4B0B8F17849752e24DD` |
