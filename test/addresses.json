@@ -1,5 +1,5 @@
 {
-    "ethereum": {
+    "mainnet": {
         "tokens": {
             "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
             "usdc": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
@@ -9,6 +9,9 @@
             "uniswapV3": {
                 "quoterV2": "0x61fFE014bA17989E743c5F6cB21bF9697530B21e",
                 "factory": "0x1F98431c8aD98523631AE4a59f267346ea31F984"
+            },
+            "kyber": {
+                "factory": "0xC7a590291e07B9fe9E64b86c58fD8fC764308C4A"
             }
         }
     },
@@ -50,6 +53,20 @@
             },
             "kyber": {
                 "quoterV2": "0x4d47fd5a29904Dae0Ef51b1c450C9750F15D7856", 
+                "factory": "0xC7a590291e07B9fe9E64b86c58fD8fC764308C4A"
+            }
+        }
+    }, 
+    "optimism": {
+        "protocols": {
+            "kyber": {
+                "factory": "0xC7a590291e07B9fe9E64b86c58fD8fC764308C4A"
+            }
+        }
+    },
+    "avalanche": {
+        "protocols": {
+            "kyber": {
                 "factory": "0xC7a590291e07B9fe9E64b86c58fD8fC764308C4A"
             }
         }
