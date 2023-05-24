@@ -16,6 +16,7 @@ Has similar interface to the official [QuoterV2](https://docs.uniswap.org/protoc
 | Optimism  | UniswapV3    | `0xc80f61d1bdAbD8f5285117e1558fDDf8C64870FE` |
 | Arbitrum  | UniswapV3    | `0xc80f61d1bdAbD8f5285117e1558fDDf8C64870FE` |
 | Polygon   | UniswapV3    | `0x7637Aaeb5BD58269B782726680d83f72C651aE74` |
+| Polygon   | KyberElastic | `0x81fdD8C62970137Df0ddb520921e295d55Df2286` |
 | Ethereum  | KyberElastic | `0x985d014DA6e6C781ec3FF77E8Fd48c30174F3d96` |
 | Optimism  | KyberElastic | `0x50F9F913590e1dc0efC822e0552EbcBa5882e5dC` |
 | Arbitrum  | KyberElastic | `0x65Ab5c537D2d7CD5544a7b04606975Fd5c16079D` |
