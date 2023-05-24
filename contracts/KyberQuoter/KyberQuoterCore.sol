@@ -41,6 +41,7 @@ contract KyberQuoterCore {
         while (swapData.specifiedAmount != 0 && swapData.sqrtP != sqrtPriceLimitX96) {
             int24 tempNextTick = getTempNextTick(swapData.currentTick, swapData.nextTick, willUpTick);
             swapData.nextSqrtP = TickMath.getSqrtRatioAtTick(tempNextTick);
+            uint160 startSqrtP = swapData.sqrtP;
 
             // local scope for targetSqrtP, usedAmount, returnedAmount and deltaL
             {
@@ -67,11 +68,14 @@ contract KyberQuoterCore {
                 swapData.reinvestL += deltaL.toUint128();
             }
 
-            // if price has not reached the next sqrt price
             if (swapData.sqrtP != swapData.nextSqrtP) {
-                swapData.currentTick = TickMath.getTickAtSqrtRatio(swapData.sqrtP);
+                if (swapData.sqrtP != startSqrtP) {
+                    // update the current tick data in case the sqrtP has changed
+                    swapData.currentTick = TickMath.getTickAtSqrtRatio(swapData.sqrtP);
+                }
                 break;
             }
+
             swapData.currentTick = willUpTick ? tempNextTick : tempNextTick - 1;
             // if tempNextTick is not next initialized tick
             if (tempNextTick != swapData.nextTick)

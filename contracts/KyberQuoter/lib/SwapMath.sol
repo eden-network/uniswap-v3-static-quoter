@@ -84,7 +84,7 @@ library SwapMath {
     );
 
     if (
-      (isExactInput && usedAmount >= specifiedAmount) ||
+      (isExactInput && usedAmount > specifiedAmount) ||
       (!isExactInput && usedAmount <= specifiedAmount)
     ) {
       usedAmount = specifiedAmount;

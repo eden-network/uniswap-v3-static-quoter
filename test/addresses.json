@@ -1,5 +1,5 @@
 {
-    "ethereum": {
+    "mainnet": {
         "tokens": {
             "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
             "usdc": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
@@ -9,24 +9,9 @@
             "uniswapV3": {
                 "quoterV2": "0x61fFE014bA17989E743c5F6cB21bF9697530B21e",
                 "factory": "0x1F98431c8aD98523631AE4a59f267346ea31F984"
-            }
-        }
-    },
-    "avalanche": {
-        "tokens": {
-            "wavax": "0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7", 
-            "savax": "0x2b2C81e08f1Af8835a78Bb2A90AE924ACE0eA4bE",
-            "usdc": "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
-            "yusd": "0x111111111111ed1D73f860F57b2798b683f2d325"
-        },
-        "protocols": {
+            },
             "kyber": {
-                "pools": {
-                    "yusd_usdc": "0x42845783dee627f47b40b5ad7f1c5147c052a21c",
-                    "wavax_savax": "0x897a83cf016f33fb061e756e4ca89baa9f17990a"
-                },
-                "quoterV2": "0x0D125c15D54cA1F8a813C74A81aEe34ebB508C1f", 
-                "factory": "0x5F1dddbf348aC2fbe22a163e30F99F9ECE3DD50a"
+                "factory": "0xC7a590291e07B9fe9E64b86c58fD8fC764308C4A"
             }
         }
     },
@@ -52,14 +37,37 @@
                 "factory": "0x411b0fAcC3489691f28ad58c47006AF5E3Ab3A28"
             },
             "kyber": {
-                "factory": "0x5F1dddbf348aC2fbe22a163e30F99F9ECE3DD50a"
+                "factory": "0xC7a590291e07B9fe9E64b86c58fD8fC764308C4A"
             }
         }
     }, 
     "arbitrum": {
+        "tokens": {
+            "usdt": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9", 
+            "usdc": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+            "arb": "0x912CE59144191C1204E64559FE8253a0e49E6548"
+        },
         "protocols": {
             "camelot": {
                 "factory": "0xd490F2F6990C0291597fd1247651b4E0dCF684Dd"
+            },
+            "kyber": {
+                "quoterV2": "0x4d47fd5a29904Dae0Ef51b1c450C9750F15D7856", 
+                "factory": "0xC7a590291e07B9fe9E64b86c58fD8fC764308C4A"
+            }
+        }
+    }, 
+    "optimism": {
+        "protocols": {
+            "kyber": {
+                "factory": "0xC7a590291e07B9fe9E64b86c58fD8fC764308C4A"
+            }
+        }
+    },
+    "avalanche": {
+        "protocols": {
+            "kyber": {
+                "factory": "0xC7a590291e07B9fe9E64b86c58fD8fC764308C4A"
             }
         }
     }
