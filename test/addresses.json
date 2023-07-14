@@ -68,6 +68,9 @@
         "protocols": {
             "kyber": {
                 "factory": "0xC7a590291e07B9fe9E64b86c58fD8fC764308C4A"
+            }, 
+            "uniswapV3": {
+                "factory": "0x740b1c1de25031C31FF4fC9A62f554A55cdC1baD"
             }
         }
     }
