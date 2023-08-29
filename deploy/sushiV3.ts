@@ -8,28 +8,18 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     const { deploy, log } = deployments;
     
     
-    const allowedNetworks = ["optimism", "arbitrum", "mainnet", "polygon", "avalanche", "base"]
+    const allowedNetworks = ["base"]
     if (!allowedNetworks.includes(network.name))
         throw new Error(`Wrong network! Only "${allowedNetworks}" supported`);
    
+    const deploymentName = "SushiV3StaticQuoter";
     const contractName = "UniswapV3StaticQuoter";
-    let factory;
-    switch (network.name) {
-        case "avalanche":
-            factory = addresses.avalanche.protocols.uniswapV3.factory;
-            break;
-        case "base":
-            factory = addresses.base.protocols.uniswapV3.factory;
-            break;
-        default:
-            factory = addresses.mainnet.protocols.uniswapV3.factory;
-            break;
-    };
-    const args = [ factory ]
+    const networkAddresses: any = Object.entries(addresses).find(([key, _]) => key == network.name)?.[1];
+    const args = [ networkAddresses.protocols.sushiV3.factory ];
     const { deployer } = await getNamedAccounts();
 
     log("1) Deploy contract");
-    const deployResult: any = await deploy(contractName, {
+    const deployResult: any = await deploy(deploymentName, {
         from: deployer,
         contract: contractName,
         skipIfAlreadyDeployed: true,
@@ -44,4 +34,4 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 };
 
 export default func;
-func.tags = [ "uniswapV3" ]
+func.tags = [ "sushiV3" ]
