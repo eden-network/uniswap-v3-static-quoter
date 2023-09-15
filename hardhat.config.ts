@@ -29,6 +29,7 @@ const ARBITRUM_RPC = process.env.ARBITRUM_RPC ?? "";
 const AVALANCHE_RPC = process.env.AVALANCHE_RPC ?? "";
 const DOGECHAIN_RPC = process.env.DOGECHAIN_RPC ?? "";
 const POLYGON_RPC = process.env.POLYGON_RPC ?? "";
+const BASE_RPC = process.env.BASE_RPC ?? "";
 const DEPLOYER_ADDRESS = process.env.DEPLOYER_ADDRESS as string;
 const DEPLOYER_PRIVATE_KEY = process.env.DEPLOYER_PRIVATE_KEY as string;
 const ETHERSCAN_API_KEY = getExplorerApiKey();
@@ -81,6 +82,14 @@ const polygonConfig = {
     accounts: [] as string[]
 };
 
+const baseConfig = {
+    url: BASE_RPC,
+    chainId: 8453,
+    live: true,
+    saveDeployments: true,
+    accounts: [] as string[]
+};
+
 if (DEPLOYER_PRIVATE_KEY) {
     mainnetConfig.accounts.push(DEPLOYER_PRIVATE_KEY);
     optimismConfig.accounts.push(DEPLOYER_PRIVATE_KEY);
@@ -88,6 +97,7 @@ if (DEPLOYER_PRIVATE_KEY) {
     dogechainConfig.accounts.push(DEPLOYER_PRIVATE_KEY);
     avalancheConfig.accounts.push(DEPLOYER_PRIVATE_KEY);
     polygonConfig.accounts.push(DEPLOYER_PRIVATE_KEY);
+    baseConfig.accounts.push(DEPLOYER_PRIVATE_KEY);
 }
 
 const config: HardhatUserConfig = {
@@ -115,7 +125,8 @@ const config: HardhatUserConfig = {
         arbitrum: arbitrumConfig,
         dogechain: dogechainConfig,
         avalanche: avalancheConfig,
-        polygon: polygonConfig
+        polygon: polygonConfig,
+        base: baseConfig
     },
     namedAccounts: {
         deployer: {
