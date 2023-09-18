@@ -61,11 +61,13 @@
         "tokens": {
             "usdt": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9", 
             "usdc": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
-            "arb": "0x912CE59144191C1204E64559FE8253a0e49E6548"
+            "arb": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+            "weth": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
         },
         "protocols": {
             "camelot": {
-                "factory": "0xd490F2F6990C0291597fd1247651b4E0dCF684Dd"
+                "factory": "0x1a3c9B1d2F0529D97f2afC5136Cc23e58f1FD35B",
+                "quoterV2": "0x0Fc73040b26E9bC8514fA028D998E73A254Fa76E"
             },
             "kyber": {
                 "quoterV2": "0x4d47fd5a29904Dae0Ef51b1c450C9750F15D7856", 
