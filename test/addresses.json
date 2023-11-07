@@ -89,5 +89,13 @@
                 "factory": "0x740b1c1de25031C31FF4fC9A62f554A55cdC1baD"
             }
         }
+    },
+    "bsc": {
+        "protocols": {
+            "pancakeswapV3": {
+                "quoterV2": "0xB048Bbc1Ee6b733FFfCFb9e9CeF7375518e25997",
+                "factory": "0x0BFbCF9fa4f9C56B0F40a671Ad40E0805A091865"
+            }
+        }
     }
 }

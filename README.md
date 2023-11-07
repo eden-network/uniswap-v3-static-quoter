@@ -27,3 +27,4 @@ Has similar interface to the official [QuoterV2](https://docs.uniswap.org/protoc
 | Dogechain | Quickswap    | `0x4a6c794192831fB9F4782E61Bec05d6C5cC9F3eA` |
 | Polygon   | Quickswap    | `0x2E0A046481c676235B806Bd004C4b492C850fb34` |
 | Arbitrum  | Camelot      | `0x11E68A3CE9A5A0F95ca9c4B0B8F17849752e24DD` |
+| BSC       | PancakeswapV3| `0xeB281D33A975CbF17c2Ac13063F6C38B50e05540` |
