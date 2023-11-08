@@ -1,93 +1,107 @@
 {
-    "mainnet": {
-        "tokens": {
-            "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-            "usdc": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-            "comp": "0xc00e94Cb662C3520282E6f5717214004A7f26888"
-        }, 
-        "protocols": {
-            "uniswapV3": {
-                "quoterV2": "0x61fFE014bA17989E743c5F6cB21bF9697530B21e",
-                "factory": "0x1F98431c8aD98523631AE4a59f267346ea31F984"
-            },
-            "kyber": {
-                "factory": "0xC7a590291e07B9fe9E64b86c58fD8fC764308C4A"
-            }
-        }
+  "mainnet": {
+    "tokens": {
+      "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+      "usdc": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+      "comp": "0xc00e94Cb662C3520282E6f5717214004A7f26888"
     },
-    "base": {
-        "tokens": {
-            "weth": "0x4200000000000000000000000000000000000006",
-            "usdc": "0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA"
-        }, 
-        "protocols": {
-            "sushiV3": {
-                "quoterV2": "0xb1E835Dc2785b52265711e17fCCb0fd018226a6e",
-                "factory": "0xc35DADB65012eC5796536bD9864eD8773aBc74C4"
-            },
-            "uniswapV3": {
-                "quoterV2": "0x3d4e44Eb1374240CE5F1B871ab261CD16335B76a",
-                "factory": "0x33128a8fC17869897dcE68Ed026d694621f6FDfD"
-            }
-        }
-    },
-    "dogechain": {
-        "tokens": {
-            "wwdoge": "0xB7ddC6414bf4F5515b52D8BdD69973Ae205ff101", 
-            "usdc": "0x765277EebeCA2e31912C9946eAe1021199B39C61",
-            "usdt": "0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D",
-            "eth": "0xB44a9B6905aF7c801311e8F4E76932ee959c663C",
-            "dc": "0x7B4328c127B85369D9f82ca0503B000D09CF9180"
-        },
-        "protocols": {
-            "quickswap": {
-                "pools": {},
-                "quoterV2": "0xd8E1E7009802c914b0d39B31Fc1759A865b727B1", 
-                "factory": "0xd2480162Aa7F02Ead7BF4C127465446150D58452"
-            }
-        }
-    },
-    "polygon": {
-        "protocols": {
-            "quickswap": {
-                "factory": "0x411b0fAcC3489691f28ad58c47006AF5E3Ab3A28"
-            },
-            "kyber": {
-                "factory": "0xC7a590291e07B9fe9E64b86c58fD8fC764308C4A"
-            }
-        }
-    }, 
-    "arbitrum": {
-        "tokens": {
-            "usdt": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9", 
-            "usdc": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
-            "arb": "0x912CE59144191C1204E64559FE8253a0e49E6548"
-        },
-        "protocols": {
-            "camelot": {
-                "factory": "0xd490F2F6990C0291597fd1247651b4E0dCF684Dd"
-            },
-            "kyber": {
-                "quoterV2": "0x4d47fd5a29904Dae0Ef51b1c450C9750F15D7856", 
-                "factory": "0xC7a590291e07B9fe9E64b86c58fD8fC764308C4A"
-            }
-        }
-    }, 
-    "optimism": {
-        "protocols": {
-            "kyber": {
-                "factory": "0xC7a590291e07B9fe9E64b86c58fD8fC764308C4A"
-            }
-        }
-    },
-    "avalanche": {
-        "protocols": {
-            "kyber": {
-                "factory": "0xC7a590291e07B9fe9E64b86c58fD8fC764308C4A"
-            }, 
-            "uniswapV3": {
-                "factory": "0x740b1c1de25031C31FF4fC9A62f554A55cdC1baD"
-            }
-        }
+    "protocols": {
+      "uniswapV3": {
+        "quoterV2": "0x61fFE014bA17989E743c5F6cB21bF9697530B21e",
+        "factory": "0x1F98431c8aD98523631AE4a59f267346ea31F984"
+      },
+      "kyber": {
+        "factory": "0xC7a590291e07B9fe9E64b86c58fD8fC764308C4A"
+      }
     }
+  },
+  "base": {
+    "tokens": {
+      "weth": "0x4200000000000000000000000000000000000006",
+      "usdc": "0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA"
+    },
+    "protocols": {
+      "sushiV3": {
+        "quoterV2": "0xb1E835Dc2785b52265711e17fCCb0fd018226a6e",
+        "factory": "0xc35DADB65012eC5796536bD9864eD8773aBc74C4"
+      },
+      "uniswapV3": {
+        "quoterV2": "0x3d4e44Eb1374240CE5F1B871ab261CD16335B76a",
+        "factory": "0x33128a8fC17869897dcE68Ed026d694621f6FDfD"
+      }
+    }
+  },
+  "dogechain": {
+    "tokens": {
+      "wwdoge": "0xB7ddC6414bf4F5515b52D8BdD69973Ae205ff101",
+      "usdc": "0x765277EebeCA2e31912C9946eAe1021199B39C61",
+      "usdt": "0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D",
+      "eth": "0xB44a9B6905aF7c801311e8F4E76932ee959c663C",
+      "dc": "0x7B4328c127B85369D9f82ca0503B000D09CF9180"
+    },
+    "protocols": {
+      "quickswap": {
+        "pools": {},
+        "quoterV2": "0xd8E1E7009802c914b0d39B31Fc1759A865b727B1",
+        "factory": "0xd2480162Aa7F02Ead7BF4C127465446150D58452"
+      }
+    }
+  },
+  "polygon": {
+    "protocols": {
+      "quickswap": {
+        "factory": "0x411b0fAcC3489691f28ad58c47006AF5E3Ab3A28"
+      },
+      "kyber": {
+        "factory": "0xC7a590291e07B9fe9E64b86c58fD8fC764308C4A"
+      }
+    }
+  },
+  "arbitrum": {
+    "tokens": {
+      "usdt": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+      "usdc": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+      "arb": "0x912CE59144191C1204E64559FE8253a0e49E6548"
+    },
+    "protocols": {
+      "camelot": {
+        "factory": "0xd490F2F6990C0291597fd1247651b4E0dCF684Dd"
+      },
+      "kyber": {
+        "quoterV2": "0x4d47fd5a29904Dae0Ef51b1c450C9750F15D7856",
+        "factory": "0xC7a590291e07B9fe9E64b86c58fD8fC764308C4A"
+      }
+    }
+  },
+  "optimism": {
+    "protocols": {
+      "kyber": {
+        "factory": "0xC7a590291e07B9fe9E64b86c58fD8fC764308C4A"
+      }
+    }
+  },
+  "avalanche": {
+    "protocols": {
+      "kyber": {
+        "factory": "0xC7a590291e07B9fe9E64b86c58fD8fC764308C4A"
+      },
+      "uniswapV3": {
+        "factory": "0x740b1c1de25031C31FF4fC9A62f554A55cdC1baD"
+      }
+    }
+  },
+  "bsc": {
+    "tokens": {
+      "wbnb": "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
+      "busd": "0x55d398326f99059ff775485246999027b3197955",
+      "weth": "0x2170Ed0880ac9A755fd29B2688956BD959F933F8"
+    },
+    "protocols": {
+      "pancakeswapV3": {
+        "quoterV2": "0xB048Bbc1Ee6b733FFfCFb9e9CeF7375518e25997",
+        "factory": "0x0BFbCF9fa4f9C56B0F40a671Ad40E0805A091865",
+        "pancakeDeployer": "0x41ff9AA7e16B8B1a8a8dc4f0eFacd93D02d071c9"
+      }
+    }
+  }
 }
