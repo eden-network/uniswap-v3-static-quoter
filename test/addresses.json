@@ -81,12 +81,20 @@
         }
     },
     "avalanche": {
+        "tokens": {
+            "usdc": "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
+            "avax": "0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7"
+        },
         "protocols": {
             "kyber": {
                 "factory": "0xC7a590291e07B9fe9E64b86c58fD8fC764308C4A"
             }, 
             "uniswapV3": {
                 "factory": "0x740b1c1de25031C31FF4fC9A62f554A55cdC1baD"
+            },
+            "pharaoh": {
+                "quoterV2": "0xAAAEA10b0e6FBe566FE27c3A023DC5D8cA6Bca3d",
+                "factory": "0xAAA32926fcE6bE95ea2c51cB4Fcb60836D320C42"
             }
         }
     }
