@@ -8,18 +8,17 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     const { deploy, log } = deployments;
     
     
-    const allowedNetworks = ["base"]
+    const allowedNetworks = ["mantle"]
     if (!allowedNetworks.includes(network.name))
         throw new Error(`Wrong network! Only "${allowedNetworks}" supported`);
    
-    const deploymentName = "SushiV3StaticQuoter";
     const contractName = "UniswapV3StaticQuoter";
-    const networkAddresses: any = Object.entries(addresses).find(([key, _]) => key == network.name)?.[1];
-    const args = [ networkAddresses.protocols.sushiV3.factory, true ];
+    let factory = addresses.mantle.protocols.agni.factory;
+    const args = [ factory, false ]
     const { deployer } = await getNamedAccounts();
 
     log("1) Deploy contract");
-    const deployResult: any = await deploy(deploymentName, {
+    const deployResult: any = await deploy(contractName, {
         from: deployer,
         contract: contractName,
         skipIfAlreadyDeployed: true,
@@ -34,4 +33,4 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 };
 
 export default func;
-func.tags = [ "sushiV3" ]
+func.tags = [ "agni" ]

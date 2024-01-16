@@ -25,7 +25,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
             factory = addresses.mainnet.protocols.uniswapV3.factory;
             break;
     };
-    const args = [ factory ]
+    const args = [ factory, true ]
     const { deployer } = await getNamedAccounts();
 
     log("1) Deploy contract");
