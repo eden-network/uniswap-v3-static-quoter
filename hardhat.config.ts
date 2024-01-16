@@ -15,7 +15,9 @@ function getExplorerApiKey() {
         "mainnet": "ETHERSCAN_API_KEY",
         "arbitrum": "ARBISCAN_API_KEY",
         "optimism": "OPSCAN_API_KEY",
-        "polygon": "POLYGONSCAN_API_KEY"
+        "polygon": "POLYGONSCAN_API_KEY",
+        "base": "BASESCAN_API_KEY",
+        "mantle": "MANTLE_API_KEY"
     }
     const [ networkName ] = process.argv.flatMap((e, i, a) => e == '--network' ? [ a[i+1] ] : [])
     const envKey = networkNameForEnvKey[networkName]
@@ -30,6 +32,7 @@ const AVALANCHE_RPC = process.env.AVALANCHE_RPC ?? "";
 const DOGECHAIN_RPC = process.env.DOGECHAIN_RPC ?? "";
 const POLYGON_RPC = process.env.POLYGON_RPC ?? "";
 const BASE_RPC = process.env.BASE_RPC ?? "";
+const MANTLE_RPC = process.env.MANTLE_RPC ?? "";
 const DEPLOYER_ADDRESS = process.env.DEPLOYER_ADDRESS as string;
 const DEPLOYER_PRIVATE_KEY = process.env.DEPLOYER_PRIVATE_KEY as string;
 const ETHERSCAN_API_KEY = getExplorerApiKey();
@@ -90,6 +93,14 @@ const baseConfig = {
     accounts: [] as string[]
 };
 
+const mantleConfig = {
+    url: MANTLE_RPC,
+    chainId: 5000,
+    live: true,
+    saveDeployments: true,
+    accounts: [] as string[]
+};
+
 if (DEPLOYER_PRIVATE_KEY) {
     mainnetConfig.accounts.push(DEPLOYER_PRIVATE_KEY);
     optimismConfig.accounts.push(DEPLOYER_PRIVATE_KEY);
@@ -98,6 +109,7 @@ if (DEPLOYER_PRIVATE_KEY) {
     avalancheConfig.accounts.push(DEPLOYER_PRIVATE_KEY);
     polygonConfig.accounts.push(DEPLOYER_PRIVATE_KEY);
     baseConfig.accounts.push(DEPLOYER_PRIVATE_KEY);
+    mantleConfig.accounts.push(DEPLOYER_PRIVATE_KEY);
 }
 
 const config: HardhatUserConfig = {
@@ -126,7 +138,8 @@ const config: HardhatUserConfig = {
         dogechain: dogechainConfig,
         avalanche: avalancheConfig,
         polygon: polygonConfig,
-        base: baseConfig
+        base: baseConfig,
+        mantle: mantleConfig
     },
     namedAccounts: {
         deployer: {
@@ -169,8 +182,8 @@ const config: HardhatUserConfig = {
             network: "avalanche",
             chainId: 43114,
             urls: {
-                apiURL: "https://api.snowtrace.io/api",
-                browserURL: "https://snowtrace.io"
+                apiURL: "https://api.routescan.io/v2/network/mainnet/evm/43114/etherscan",
+                browserURL: "https://snowtrace.io/"
             }
         }, {
             network: "polygon",
@@ -178,6 +191,14 @@ const config: HardhatUserConfig = {
             urls: {
                 apiURL: "https://api.polygonscan.com/api",
                 browserURL: "https://polygonscan.com"
+            }
+        },
+        {
+            network: "mantle",
+            chainId: 5000,
+            urls: {
+                apiURL: "https://explorer.mantle.xyz/api",
+                browserURL: "https://explorer.mantle.xyz"
             }
         }]
     },

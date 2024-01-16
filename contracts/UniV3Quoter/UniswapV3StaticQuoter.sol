@@ -5,6 +5,7 @@ pragma abicoder v2;
 import '@uniswap/v3-periphery/contracts/base/PeripheryImmutableState.sol';
 import '@uniswap/v3-periphery/contracts/libraries/PoolAddress.sol';
 import '@uniswap/v3-periphery/contracts/libraries/Path.sol';
+import "@uniswap/v3-core/contracts/interfaces/IUniswapV3Factory.sol";
 
 import './interfaces/IUniswapV3StaticQuoter.sol';
 import './UniV3QuoterCore.sol';
@@ -17,9 +18,11 @@ contract UniswapV3StaticQuoter is IUniswapV3StaticQuoter, UniV3QuoterCore {
     using Path for bytes;
 
     address immutable factory;
+    bool immutable computePoolAddress;
 
-    constructor(address _factory) {
+    constructor(address _factory, bool _computePoolAddress) {
         factory = _factory;
+        computePoolAddress = _computePoolAddress;
     }
 
     function getPool(
@@ -27,7 +30,9 @@ contract UniswapV3StaticQuoter is IUniswapV3StaticQuoter, UniV3QuoterCore {
         address tokenB,
         uint24 fee
     ) private view returns (IUniswapV3Pool) {
-        return IUniswapV3Pool(PoolAddress.computeAddress(factory, PoolAddress.getPoolKey(tokenA, tokenB, fee)));
+        return computePoolAddress
+            ? IUniswapV3Pool(PoolAddress.computeAddress(factory, PoolAddress.getPoolKey(tokenA, tokenB, fee)))
+            : IUniswapV3Pool(IUniswapV3Factory(factory).getPool(tokenA, tokenB, fee));
     }
 
     function quoteExactInputSingle(QuoteExactInputSingleParams memory params)
