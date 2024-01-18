@@ -61,7 +61,8 @@
         "tokens": {
             "usdt": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9", 
             "usdc": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
-            "arb": "0x912CE59144191C1204E64559FE8253a0e49E6548"
+            "arb": "0x912CE59144191C1204E64559FE8253a0e49E6548",
+            "weth": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
         },
         "protocols": {
             "camelot": {
@@ -70,6 +71,10 @@
             "kyber": {
                 "quoterV2": "0x4d47fd5a29904Dae0Ef51b1c450C9750F15D7856", 
                 "factory": "0xC7a590291e07B9fe9E64b86c58fD8fC764308C4A"
+            },
+            "ramses": {
+                "quoterV2": "0xAA20EFF7ad2F523590dE6c04918DaAE0904E3b20",
+                "factory": "0xAA2cd7477c451E703f3B9Ba5663334914763edF8"
             }
         }
     }, 
