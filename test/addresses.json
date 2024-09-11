@@ -80,5 +80,21 @@
                 "factory": "0x740b1c1de25031C31FF4fC9A62f554A55cdC1baD"
             }
         }
+    },
+    "mantle": {
+        "tokens": {
+            "weth": "0xdEAddEaDdeadDEadDEADDEAddEADDEAddead1111",
+            "usdc": "0x09Bc4E0D864854c6aFB6eB9A9cdF58aC190D0dF9"
+        },
+        "protocols": {
+            "agni": {
+                "quoterV2": "0xc4aaDc921E1cdb66c5300Bc158a313292923C0cb", 
+                "factory": "0x25780dc8Fc3cfBD75F33bFDAB65e969b603b2035"
+            },
+            "fusion": {
+                "quoterV2": "0x90f72244294E7c5028aFd6a96E18CC2c1E913995", 
+                "factory": "0x530d2766D1988CC1c000C8b7d00334c14B69AD71"
+            }   
+        }
     }
 }
