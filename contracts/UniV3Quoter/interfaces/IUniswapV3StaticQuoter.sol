@@ -32,4 +32,12 @@ interface IUniswapV3StaticQuoter {
         external
         view
         returns (uint256 amountOut);
+
+    struct QuoteExactOutputSingleParams {
+		address tokenIn;
+		address tokenOut;
+		uint256 amountOut;
+		uint24 fee;
+		uint160 sqrtPriceLimitX96;
+	}
 }
