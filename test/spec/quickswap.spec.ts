@@ -11,11 +11,11 @@ import {
 import addresses from "../addresses.json";
 
 
-const { tokens } = addresses.dogechain
-const { quickswap } = addresses.dogechain.protocols
+const { tokens } = addresses.polygon
+const { quickswap } = addresses.polygon.protocols
 
-async function dogechainFixture(blockNumber: number) {
-    await forkNetwork("dogechain", blockNumber);
+async function polygonFixture(blockNumber: number) {
+    await forkNetwork("polygon", blockNumber);
     return fixture();
 }
 
@@ -43,7 +43,7 @@ async function getAlgebraQuoterV2() {
 
 describe("Quoter:Quickswap", async () => {
 
-    context("dogechain", () => {
+    context("polygon", () => {
 
         async function checkStaticMatchesOriginalSingle(
             amountIn: BigNumber, 
@@ -85,39 +85,39 @@ describe("Quoter:Quickswap", async () => {
             console.log(`Gas: ${gas.toString()}`)
         }
 
-        let fix: ThenArgRecursive<ReturnType<typeof dogechainFixture>>;
+        let fix: ThenArgRecursive<ReturnType<typeof polygonFixture>>;
 
-        context("2280000", async () => {
-            const FORK_BLOCK = 2280000;
+        context("35715813", async () => {
+            const FORK_BLOCK = 35715813;
 
             beforeEach(async () => {
-                fix = await dogechainFixture(FORK_BLOCK); 
+                fix = await polygonFixture(FORK_BLOCK); 
             });
 
 
             context("static-Quoter and original-Quoter quotes match :: single", async () => {
 
-                it("WWDOGE -> USDC :: 1000 WWDOGE", async () => {
+                it("WETH -> WBTC :: 1 WETH", async () => {
                     await checkStaticMatchesOriginalSingle(
-                        ethers.utils.parseUnits("1000", 18),
-                        tokens.wwdoge,
-                        tokens.usdc
+                        ethers.utils.parseUnits("1", 18),
+                        tokens.weth,
+                        tokens.wbtc
                     )
                 })
 
-                it("USDC -> WWDOGE :: 33_000 USDC", async () => {
+                it("WBTC -> WETH :: 4 WBTC", async () => {
+                    await checkStaticMatchesOriginalSingle(
+                        ethers.utils.parseUnits("4", 8),
+                        tokens.wbtc,
+                        tokens.weth
+                    )
+                })
+
+                it("USDC.e -> WETH :: 33_000 USDC", async () => {
                     await checkStaticMatchesOriginalSingle(
                         ethers.utils.parseUnits("33000", 6),
-                        tokens.usdc,
-                        tokens.wwdoge
-                    )
-                })
-
-                it("USDC -> ETH :: 330_000 USDC", async () => {
-                    await checkStaticMatchesOriginalSingle(
-                        ethers.utils.parseUnits("330000", 6),
-                        tokens.usdc,
-                        tokens.eth
+                        tokens.usdce,
+                        tokens.weth
                     )
                 })
 
@@ -125,17 +125,17 @@ describe("Quoter:Quickswap", async () => {
 
             context("static-Quoter and original-Quoter quotes match :: path", async () => {
 
-                it("ETH --> USDC --> WWDOGE :: 100 ETH", async () => {
+                it("USDC --> WETH --> WBTC :: 10_000 USDC", async () => {
                     await checkStaticMatchesOriginalPath(
-                        ethers.utils.parseUnits("100", 18),
-                        [tokens.eth, tokens.usdc, tokens.wwdoge],
+                        ethers.utils.parseUnits("10000", 6),
+                        [tokens.usdce, tokens.weth, tokens.wbtc],
                     )
                 })
 
-                it("ETH --> USDC --> WWDOGE -> DC :: 1 ETH", async () => {
+                it("WBTC --> WETH --> USDC.e -> USDT :: 1 WBTC", async () => {
                     await checkStaticMatchesOriginalPath(
-                        ethers.utils.parseUnits("1", 18),
-                        [tokens.eth, tokens.usdc, tokens.wwdoge, tokens.dc],
+                        ethers.utils.parseUnits("1", 8),
+                        [tokens.wbtc, tokens.weth, tokens.usdce, tokens.usdt],
                     )
                 })
 
