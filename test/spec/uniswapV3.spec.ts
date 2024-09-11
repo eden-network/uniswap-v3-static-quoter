@@ -7,8 +7,8 @@ import { expect } from "chai";
 import { encodePath, forkNetwork, deployContract, ThenArgRecursive } from "../helpers";
 import addresses from "../addresses.json";
 
-const { uniswapV3 } = addresses.ethereum.protocols;
-const { tokens } = addresses.ethereum;
+const { uniswapV3 } = addresses.mainnet.protocols;
+const { tokens } = addresses.mainnet;
 
 async function fixture() {
     const [ deployer ] = await ethers.getSigners();

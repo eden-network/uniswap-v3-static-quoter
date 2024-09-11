@@ -31,30 +31,21 @@
             }
         }
     },
-    "dogechain": {
-        "tokens": {
-            "wwdoge": "0xB7ddC6414bf4F5515b52D8BdD69973Ae205ff101", 
-            "usdc": "0x765277EebeCA2e31912C9946eAe1021199B39C61",
-            "usdt": "0xE3F5a90F9cb311505cd691a46596599aA1A0AD7D",
-            "eth": "0xB44a9B6905aF7c801311e8F4E76932ee959c663C",
-            "dc": "0x7B4328c127B85369D9f82ca0503B000D09CF9180"
-        },
-        "protocols": {
-            "quickswap": {
-                "pools": {},
-                "quoterV2": "0xd8E1E7009802c914b0d39B31Fc1759A865b727B1", 
-                "factory": "0xd2480162Aa7F02Ead7BF4C127465446150D58452"
-            }
-        }
-    },
     "polygon": {
         "protocols": {
             "quickswap": {
+                "quoterV2": "0xa15F0D7377B2A0C0c10db057f641beD21028FC89",
                 "factory": "0x411b0fAcC3489691f28ad58c47006AF5E3Ab3A28"
             },
             "kyber": {
                 "factory": "0xC7a590291e07B9fe9E64b86c58fD8fC764308C4A"
             }
+        }, 
+        "tokens": {
+            "weth": "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619", 
+            "wbtc": "0x1BFD67037B42Cf73acF2047067bd4F2C47D9BfD6",
+            "usdce": "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
+            "usdt": "0xc2132D05D31c914a87C6611C10748AEb04B58e8F"
         }
     }, 
     "arbitrum": {
